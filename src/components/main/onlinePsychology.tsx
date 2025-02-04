@@ -154,7 +154,7 @@ export default function OnlinePsychology() {
                   <h3 className="text-lg font-semibold text-white mt-3">
                     <span className="block">{feature.title}</span>
                   </h3>
-                  <p className="text-base text-white max-w-[16rem] mt-3 mx-auto md:mx-0">
+                  <p className="text-base text-white max-w-[13rem] mt-3 mx-auto md:mx-0">
                     {feature.description}
                   </p>
                 </motion.div>

@@ -101,10 +101,10 @@ export default function ChooseUs() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <h2 className="text-4xl font-bold text-[#634AE2] mb-2">
+        <h2 className="text-4xl font-bold text-[#634AE2] mb-5">
           ¿Por qué elegirnos?
         </h2>
-        <p className=" text-[#634AE2] mb-10 w-[643px] mx-auto leading-relaxed ">
+        <p className=" text-[#634AE2] mb-5 w-[643px] mx-auto leading-relaxed ">
           En Contigo Voy, te ofrecemos atención psicológica online que se adapta
           a ti, brindándote el apoyo necesario para afrontar los desafíos
           diarios con mayor fortaleza y equilibrio emocional.
@@ -115,7 +115,7 @@ export default function ChooseUs() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 justify-items-center"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-40 justify-items-center"
       >
         {/* Primer fila con los primeros 4 elementos */}
         {features.slice(0, 4).map((feature, index) => (
@@ -136,7 +136,7 @@ export default function ChooseUs() {
           </motion.div>
         ))}
 
-        <div className="lg:col-span-4 flex justify-center gap-20">
+        <div className="lg:col-span-4 flex justify-center gap-40">
           {features.slice(4).map((feature, index) => (
             <motion.div
               key={feature.title}

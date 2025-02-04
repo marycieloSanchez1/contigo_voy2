@@ -55,7 +55,17 @@ export const NavbarGeneral = ({ navItems }: any) => {
 
 export const DesktopNav = ({ navItems }: any) => {
   const [hovered, setHovered] = useState<number | null>(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const pathname = usePathname();
+
+  const serviciosLinks = [
+    { name: "Terapia para Niños", link: "/servicios/terapia/infantes" },
+    { name: "Terapia para Adolescentes", link: "/terapia-ninos" },
+    { name: "Terapia para Adultos", link: "/terapia-parejas" },
+    { name: "Terapia para Parejas", link: "/terapia-adolescentes" },
+    { name: "Terapia Familiar", link: "/terapia-familiar" },
+  ];
+
   return (
     <>
       <div className="lg:hidden">
@@ -71,28 +81,77 @@ export const DesktopNav = ({ navItems }: any) => {
         <div className="flex items-center gap-6">
           <div className="hidden flex-1 flex-row items-center justify-center space-x-0 text-sm text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex gap-1">
             {navItems.map((navItem: any, idx: number) => (
-              <div key={idx}>
+              <div key={idx} className="relative">
                 {navItem.isButton ? (
                   <Link href={navItem.link}>
                     <button
                       className={`text-sm sm:text-base border-2 transition-colors duration-300 rounded-full py-1 sm:py-2 px-3 sm:px-4 
-                                  ${
-                                    pathname === navItem.link
-                                      ? "bg-[#634AE2] text-white"
-                                      : "text-[#634AE2] border-[#634AE2] hover:bg-[#634AE2] hover:text-white"
-                                  }`}
+                        ${
+                          pathname === navItem.link
+                            ? "bg-[#634AE2] text-white"
+                            : "text-[#634AE2] border-[#634AE2] hover:bg-[#634AE2] hover:text-white"
+                        }`}
                       onMouseEnter={() => setHovered(null)}
                     >
                       {navItem.name}
                     </button>
                   </Link>
+                ) : navItem.name === "Servicios" ? (
+                  <div
+                    onMouseEnter={() => {
+                      setHovered(idx);
+                      setDropdownVisible(true);
+                    }}
+                    onMouseLeave={() => {
+                      setHovered(null);
+                      setDropdownVisible(false);
+                    }}
+                    className="relative"
+                  >
+                    <Link
+                      className={`relative px-4 py-2 ${
+                        hovered === idx || pathname.includes("/terapia")
+                          ? "bg-[#634AE2] rounded-full text-white"
+                          : "text-[#634AE2] hover:bg-[#634AE2] hover:text-white rounded-full"
+                      }`}
+                      href="/servicios"
+                    >
+                      <span className="relative z-20 text-base">Servicios</span>
+                    </Link>
+
+                    {dropdownVisible && (
+                      <motion.div
+                        className="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg w-56 z-10"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="flex flex-col gap-2 p-2">
+                          {serviciosLinks.map((service) => (
+                            <Link key={service.link} href={service.link}>
+                              <div
+                                className={`px-4 py-2 text-sm rounded-full transition-colors duration-300 ${
+                                  pathname === service.link
+                                    ? "bg-[#634AE2] text-white"
+                                    : "text-[#634AE2] hover:bg-[#634AE2] hover:text-white"
+                                }`}
+                              >
+                                {service.name}
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 ) : (
                   <Link
                     onMouseEnter={() => setHovered(idx)}
-                    className={`relative px-4 py-2 text-muted-foreground ${
+                    className={`relative px-4 py-2 ${
                       pathname === navItem.link || hovered === idx
-                        ? "bg-[#634AE2] rounded-full"
-                        : ""
+                        ? "bg-[#634AE2] rounded-full text-white"
+                        : "text-[#634AE2] hover:bg-[#634AE2] hover:text-white rounded-full"
                     }`}
                     key={idx}
                     href={navItem.link}
@@ -103,14 +162,7 @@ export const DesktopNav = ({ navItems }: any) => {
                         className="absolute inset-0 h-full w-full rounded-full bg-[#634AE2]"
                       />
                     )}
-                    <span
-                      className={cn(
-                        "relative z-20 text-white text-base",
-                        hovered === idx || pathname === navItem.link
-                          ? "text-white"
-                          : "text-[#634AE2] dark:text-primary"
-                      )}
-                    >
+                    <span className="relative z-20 text-base">
                       {navItem.name}
                     </span>
                   </Link>
